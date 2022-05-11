@@ -147,7 +147,7 @@ class ActiveRecord::EncryptionTestCase < ActiveRecord::TestCase
 
   ENCRYPTION_PROPERTIES_TO_RESET = {
     config: %i[ primary_key deterministic_key key_derivation_salt store_key_references
-      key_derivation_salt support_unencrypted_data encrypt_fixtures
+      key_derivation_salt support_unencrypted_data encrypt_fixtures compress
       forced_encoding_for_deterministic_encryption ],
     context: %i[ key_provider ]
   }
