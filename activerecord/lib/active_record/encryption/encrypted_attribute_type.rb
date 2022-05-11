@@ -12,7 +12,7 @@ module ActiveRecord
 
       attr_reader :scheme, :cast_type
 
-      delegate :key_provider, :downcase?, :deterministic?, :previous_schemes, :with_context, :fixed?, to: :scheme
+      delegate :key_provider, :downcase?, :deterministic?, compress?, :previous_schemes, :with_context, :fixed?, to: :scheme
       delegate :accessor, to: :cast_type
 
       # === Options
@@ -125,7 +125,7 @@ module ActiveRecord
         end
 
         def encryption_options
-          @encryption_options ||= { key_provider: key_provider, cipher_options: { deterministic: deterministic? } }.compact
+          @encryption_options ||= { key_provider: key_provider, cipher_options: { deterministic: deterministic?, compress: compress? } }.compact
         end
 
         def decryption_options

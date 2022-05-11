@@ -11,7 +11,7 @@ module ActiveRecord
       attr_accessor :previous_schemes
 
       def initialize(key_provider: nil, key: nil, deterministic: nil, downcase: nil, ignore_case: nil,
-                     previous_schemes: nil, **context_properties)
+                     compress: nil, previous_schemes: nil, **context_properties)
         # Initializing all attributes to +nil+ as we want to allow a "not set" semantics so that we
         # can merge schemes without overriding values with defaults. See +#merge+
 
@@ -20,9 +20,11 @@ module ActiveRecord
         @deterministic = deterministic
         @downcase = downcase || ignore_case
         @ignore_case = ignore_case
+        @compress = compress
         @previous_schemes_param = previous_schemes
         @previous_schemes = Array.wrap(previous_schemes)
         @context_properties = context_properties
+
 
         validate_config!
       end
@@ -37,6 +39,10 @@ module ActiveRecord
 
       def deterministic?
         @deterministic
+      end
+
+      def compress?
+        @compress
       end
 
       def fixed?

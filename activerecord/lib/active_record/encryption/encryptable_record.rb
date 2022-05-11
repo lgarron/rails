@@ -65,7 +65,7 @@ module ActiveRecord
         end
 
         private
-          def scheme_for(key_provider: nil, key: nil, deterministic: false, downcase: false, ignore_case: false, previous: [], **context_properties)
+          def scheme_for(key_provider: nil, key: nil, deterministic: false, downcase: false, ignore_case: false, compress: false, previous: [], **context_properties)
             ActiveRecord::Encryption::Scheme.new(key_provider: key_provider, key: key, deterministic: deterministic,
                                                  downcase: downcase, ignore_case: ignore_case, **context_properties).tap do |scheme|
               scheme.previous_schemes = global_previous_schemes_for(scheme) +

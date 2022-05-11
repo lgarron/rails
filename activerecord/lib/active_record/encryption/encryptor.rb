@@ -88,7 +88,14 @@ module ActiveRecord
         def build_encrypted_message(clear_text, key_provider:, cipher_options:)
           key = key_provider.encryption_key
 
-          clear_text, was_compressed = compress_if_worth_it(clear_text)
+          if cipher_options[:compress] || (
+            cipher_options[:compress] == nil &&
+            ActiveRecord::Encryption.config.compress
+          )
+            clear_text, was_compressed = cipher_options[:compress]
+          else
+            was_compressed = false
+          end
           cipher.encrypt(clear_text, key: key.secret, **cipher_options).tap do |message|
             message.headers.add(key.public_tags)
             message.headers.compressed = true if was_compressed
